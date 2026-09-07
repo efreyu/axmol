@@ -288,6 +288,10 @@ void ImGuiPresenter::init()
 #if AX_IMGUI_USE_GLFW
     if (rhi::GraphicsCore::isOpenGL())
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;  // Enable Multi-Viewport / Platform Windows
+#if AX_ENABLE_MTL
+    if (rhi::GraphicsCore::isMetal())
+        io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;  // Metal multi-viewport (axmol patch)
+#endif
 #endif
     // io.ConfigViewportsNoAutoMerge = true;
     // io.ConfigViewportsNoTaskBarIcon = true;

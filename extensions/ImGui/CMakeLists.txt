@@ -37,6 +37,12 @@ list(APPEND SOURCE
 list(APPEND SOURCE src/ImGui/backends/imgui_impl_axmol.cpp)
 list(APPEND HEADER src/ImGui/backends/imgui_impl_axmol.h)
 
+if(MACOSX AND AX_ENABLE_MTL)
+  list(APPEND HEADER src/ImGui/backends/imgui_impl_metal.h)
+  list(APPEND SOURCE src/ImGui/backends/imgui_impl_metal.mm)
+  list(APPEND SOURCE src/ImGui/backends/imgui_impl_axmol_mtl.mm)
+endif()
+
 if(WINRT OR ANDROID OR IOS OR WASM)
   list(APPEND SOURCE src/ImGui/backends/imgui_impl_axmol_sw.cpp)
   list(APPEND HEADER src/ImGui/backends/imgui_impl_axmol_sw.h)

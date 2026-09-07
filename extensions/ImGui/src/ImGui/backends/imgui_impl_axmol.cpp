@@ -630,9 +630,20 @@ static void ImGui_ImplAxmol_RenderWindow(ImGuiViewport* viewport, void*)
     ImGui_ImplAxmol_RenderDrawData(viewport->DrawData);
 }
 
+#if defined(AX_PLATFORM_GLFW) && AX_ENABLE_MTL
+extern "C" void ImGui_ImplAxmol_MTL_InstallViewportHooks(ImGuiPlatformIO& platform_io);
+#endif
+
 static void ImGui_ImplAxmol_InitMultiViewportSupport()
 {
-    ImGuiPlatformIO& platform_io      = ImGui::GetPlatformIO();
+    ImGuiPlatformIO& platform_io = ImGui::GetPlatformIO();
+#if defined(AX_PLATFORM_GLFW) && AX_ENABLE_MTL
+    if (rhi::GraphicsCore::isMetal())
+    {
+        ImGui_ImplAxmol_MTL_InstallViewportHooks(platform_io);
+        return;
+    }
+#endif
     platform_io.Renderer_RenderWindow = ImGui_ImplAxmol_RenderWindow;
 }
 
